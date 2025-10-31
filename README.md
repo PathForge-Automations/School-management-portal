@@ -6,7 +6,22 @@ Absolutely! Below is a **professionally rewritten `README.md`** in the style of 
 **A Unified Digital Platform for Academic & Administrative Excellence**  
 *Developed by Anilkumar Konakanchi | PathForge Automations*
 
-![Login Interface](https://github.com/user-attachments/assets/ba58b0bc-c56d-4a4b-88b3-b6df4be62664)
+Login Page:
+<img width="1920" height="1080" alt="Screenshot 2025-10-31 182318" src="https://github.com/user-attachments/assets/762af2e0-c51a-4948-8af6-26a2d415c6c4" />
+
+Admin Dashboard:
+<img width="1920" height="1080" alt="Screenshot 2025-10-31 182355" src="https://github.com/user-attachments/assets/9464c94b-c7f1-4f03-b01a-e21d827e8797" />
+
+Faculty Dashboard:
+<img width="1208" height="2849" alt="localhost_8080_" src="https://github.com/user-attachments/assets/93658438-f361-40a0-9c66-11ad76c34859" />
+
+Accounts Dashboard:
+<img width="1920" height="1080" alt="Screenshot 2025-10-31 182514" src="https://github.com/user-attachments/assets/b7c68a4c-fdb2-4fd8-a4e7-393fcfb10fb5" />
+
+Parents Dashboard:
+<img width="1208" height="2278" alt="localhost_8080_ (1)" src="https://github.com/user-attachments/assets/dd6e9325-da75-4818-9b8d-97d62217543b" />
+
+
 
 ---
 
@@ -163,5 +178,3 @@ For licensing terms, contact: **pathforge.automations@gmail.com**
 > ✨ **Your feedback fuels innovation.** Help us build better tools for educators worldwide.
 
 --- 
-
-Let me know if you'd like a **lighter version** for GitHub public visibility, or a **more technical deep-dive** for developer onboarding!
