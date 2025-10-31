@@ -1,6 +1,3 @@
-Absolutely! Below is a **professionally rewritten `README.md`** in the style of a **corporate-grade open-source or internal product documentation**, with clear structure, concise language, visual hierarchy, and a tone that reflects maturity, scalability, and enterprise readiness — while still being accessible to developers, administrators, and stakeholders.
-
----
 
 # 🏫 School Portal — Management System  
 **A Unified Digital Platform for Academic & Administrative Excellence**  
