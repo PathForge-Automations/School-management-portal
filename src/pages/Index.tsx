@@ -1,9 +1,12 @@
 // Index.tsx (FULL UPDATED VERSION)
 // Implements:
 // - Auto registration number: SCHL2025001
-// - Remove subjects/marks from "My Students" attendance view
-// - Student register number = Parent username, default password = "welcome", force change on first login
-import { useState } from "react";
+// - 6 faculty accounts mapped to grades 10th → 5th
+// - Auto-assign student to correct faculty by grade
+// - Remove manual register number input (auto-generated)
+// - Parent username = register number, default password = "welcome", force change on first login
+
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -116,6 +119,16 @@ interface AppData {
   disciplinaryReports: DisciplinaryReport[];
 }
 
+// ✅ Faculty-to-Grade Mapping
+const FACULTY_GRADE_MAP: Record<string, string> = {
+  faculty1: "10th Grade",
+  faculty2: "9th Grade",
+  faculty3: "8th Grade",
+  faculty4: "7th Grade",
+  faculty5: "6th Grade",
+  faculty6: "5th Grade",
+};
+
 const Index = () => {
   const currentYear = new Date().getFullYear();
 
@@ -128,30 +141,55 @@ const Index = () => {
         role: "Admin",
         isFirstLogin: true,
       },
+      // ✅ Faculty 1 to 6
       {
         id: "faculty1",
         username: "faculty1",
         password: "welcome",
         role: "Faculty",
-        assignedStudents: ["SCHL2025001", "SCHL2025002"],
+        assignedStudents: [],
         isFirstLogin: true,
       },
       {
-        id: "parent1",
-        username: "SCHL2025001",
+        id: "faculty2",
+        username: "faculty2",
         password: "welcome",
-        role: "Parent",
-        studentId: "SCHL2025001",
+        role: "Faculty",
+        assignedStudents: [],
         isFirstLogin: true,
       },
       {
-  id: "parent2",
-  username: "SCHL2025002",
-  password: "welcome",
-  role: "Parent",
-  studentId: "SCHL2025002",
-  isFirstLogin: true,
-},
+        id: "faculty3",
+        username: "faculty3",
+        password: "welcome",
+        role: "Faculty",
+        assignedStudents: [],
+        isFirstLogin: true,
+      },
+      {
+        id: "faculty4",
+        username: "faculty4",
+        password: "welcome",
+        role: "Faculty",
+        assignedStudents: [],
+        isFirstLogin: true,
+      },
+      {
+        id: "faculty5",
+        username: "faculty5",
+        password: "welcome",
+        role: "Faculty",
+        assignedStudents: [],
+        isFirstLogin: true,
+      },
+      {
+        id: "faculty6",
+        username: "faculty6",
+        password: "welcome",
+        role: "Faculty",
+        assignedStudents: [],
+        isFirstLogin: true,
+      },
       {
         id: "accounts1",
         username: "accounts",
@@ -159,106 +197,12 @@ const Index = () => {
         role: "Accounts",
         isFirstLogin: true,
       },
+      // Parents will be auto-created
     ],
-    students: [
-      {
-        registerNumber: "SCHL2025001",
-        name: "Alice Johnson",
-        grade: "10th Grade",
-        section: "A",
-        fatherName: "John Johnson",
-        motherName: "Jane Johnson",
-        fatherPhone: "9876543210",
-        motherPhone: "9876543211",
-        address: "123 Main St, City",
-        totalFee: 20000,
-        attendance: [
-          { date: "2025-01-15", session: "morning", present: true },
-          { date: "2025-01-15", session: "afternoon", present: true },
-          { date: "2025-01-16", session: "morning", present: true },
-          { date: "2025-01-16", session: "afternoon", present: false },
-          { date: "2025-01-17", session: "morning", present: false },
-        ],
-        marks: {
-          Telugu: 80,
-          Hindi: 75,
-          English: 88,
-          Mathematics: 85,
-          Science: 92,
-          Social: 82,
-          Biology: 90,
-        },
-        disciplinaryActions: [],
-        isPortalBlocked: false,
-      },
-      {
-        registerNumber: "SCHL2025002",
-        name: "Bob Smith",
-        grade: "10th Grade",
-        section: "B",
-        fatherName: "Robert Smith",
-        motherName: "Emily Smith",
-        fatherPhone: "8765432109",
-        motherPhone: "8765432108",
-        address: "456 Oak Ave, Town",
-        totalFee: 20000,
-        attendance: [
-          { date: "2025-01-15", session: "morning", present: true },
-          { date: "2025-01-15", session: "afternoon", present: true },
-          { date: "2025-01-16", session: "morning", present: false },
-          { date: "2025-01-16", session: "afternoon", present: true },
-          { date: "2025-01-17", session: "morning", present: false },
-        ],
-        marks: {
-          Telugu: 70,
-          Hindi: 65,
-          English: 75,
-          Mathematics: 78,
-          Science: 82,
-          Social: 88,
-          Biology: 79,
-        },
-        disciplinaryActions: ["Late submission of homework - Jan 10, 2025"],
-        isPortalBlocked: false,
-      },
-    ],
-    fees: [
-      {
-        id: "fee1",
-        studentRegisterNumber: "SCHL2025001",
-        totalDue: 5000,
-        amountPaid: 5000,
-        status: "Paid",
-        lastPaymentDate: "2025-01-10",
-      },
-      {
-        id: "fee2",
-        studentRegisterNumber: "SCHL2025002",
-        totalDue: 5000,
-        amountPaid: 0,
-        status: "Pending",
-        lastPaymentDate: "",
-      },
-    ],
-    leaves: [
-      {
-        id: "leave1",
-        facultyId: "faculty1",
-        dateStart: "2025-02-01",
-        dateEnd: "2025-02-03",
-        reason: "Medical appointment",
-        status: "Pending",
-      },
-    ],
-    announcements: [
-      {
-        id: "ann1",
-        adminId: "admin1",
-        date: "2025-01-20",
-        content: "Winter break starts from February 15th. Classes will resume on March 1st.",
-        audience: "All",
-      },
-    ],
+    students: [],
+    fees: [],
+    leaves: [],
+    announcements: [],
     disciplinaryReports: [],
   });
 
@@ -344,6 +288,15 @@ const Index = () => {
       title: "Logged Out",
       description: "You have been logged out successfully.",
     });
+  };
+
+  const generateRegisterNumber = () => {
+    const year = new Date().getFullYear();
+    const existingStudents = data.students
+      .filter(s => s.registerNumber.startsWith(`SCHL${year}`))
+      .map(s => parseInt(s.registerNumber.slice(8))); // "SCHL2025" = 8 chars → slice(8)
+    const nextNumber = existingStudents.length > 0 ? Math.max(...existingStudents) + 1 : 1;
+    return `SCHL${year}${nextNumber.toString().padStart(3, '0')}`;
   };
 
   const LoginPage = () => {
@@ -954,14 +907,13 @@ const Index = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [selectedSession, setSelectedSession] = useState<'morning' | 'afternoon'>('morning');
     const [studentForm, setStudentForm] = useState({
-      registerNumber: "",
       name: "",
       fatherName: "",
       motherName: "",
       fatherPhone: "",
       motherPhone: "",
       address: "",
-      grade: "8th Grade",
+      grade: "10th Grade",
       section: "A",
       totalFee: 20000,
     });
@@ -1083,16 +1035,6 @@ const Index = () => {
       });
     };
 
-    // ✅ FIXED: Now generates SCHL2025001 format
-    const generateRegisterNumber = () => {
-      const year = new Date().getFullYear();
-      const existingStudents = data.students
-        .filter(s => s.registerNumber.startsWith(`SCHL${year}`))
-        .map(s => parseInt(s.registerNumber.slice(9))); // "SCHL2025" = 8 chars, so slice(8) → but we use 9 for 3-digit
-      const nextNumber = existingStudents.length > 0 ? Math.max(...existingStudents) + 1 : 1;
-      return `SCHL${year}${nextNumber.toString().padStart(3, '0')}`;
-    };
-
     const saveStudent = () => {
       const {
         name,
@@ -1116,100 +1058,86 @@ const Index = () => {
       const newRegisterNumber = generateRegisterNumber();
       const baseSubjects = ["Telugu", "Hindi", "English", "Mathematics", "Science", "Social"];
       const gradeNum = parseInt(grade.replace(/\D/g, ""));
-      const subjects = gradeNum >= 8 && gradeNum <= 10 ? [...baseSubjects, "Biology"] : baseSubjects;
+      const subjects = gradeNum >= 5 && gradeNum <= 10 ? [...baseSubjects, "Biology"] : baseSubjects;
       const newMarks: Record<string, number> = {};
       subjects.forEach((sub) => {
         newMarks[sub] = 0;
       });
 
-      const existingStudentIndex = data.students.findIndex((s) => s.registerNumber === studentForm.registerNumber);
-      if (existingStudentIndex >= 0) {
-        setData((prev) => {
-          const updatedStudents = [...prev.students];
-          updatedStudents[existingStudentIndex] = {
-            ...updatedStudents[existingStudentIndex],
-            name,
-            grade,
-            section,
-            fatherName,
-            motherName,
-            fatherPhone,
-            motherPhone,
-            address,
-            marks: { ...updatedStudents[existingStudentIndex].marks, ...newMarks },
-          };
-          return { ...prev, students: updatedStudents };
-        });
-        toast({
-          title: "Student Updated",
-          description: `Student ${name} updated successfully.`,
-        });
-      } else {
-        const newStudent: Student = {
-          registerNumber: newRegisterNumber,
-          name,
-          grade,
-          section,
-          fatherName,
-          motherName,
-          fatherPhone,
-          motherPhone,
-          address,
-          attendance: [],
-          marks: newMarks,
-          disciplinaryActions: [],
-          isPortalBlocked: false,
-          totalFee: studentForm.totalFee,
+      const newStudent: Student = {
+        registerNumber: newRegisterNumber,
+        name,
+        grade,
+        section,
+        fatherName,
+        motherName,
+        fatherPhone,
+        motherPhone,
+        address,
+        attendance: [],
+        marks: newMarks,
+        disciplinaryActions: [],
+        isPortalBlocked: false,
+        totalFee: studentForm.totalFee,
+      };
+
+      // ✅ Auto-assign to correct faculty
+      const facultyId = Object.entries(FACULTY_GRADE_MAP).find(
+        ([_, g]) => g === grade
+      )?.[0];
+
+      setData((prev) => {
+        const updatedUsers = [...prev.users];
+        if (facultyId) {
+          updatedUsers.forEach((user) => {
+            if (user.id === facultyId) {
+              user.assignedStudents = [...(user.assignedStudents || []), newRegisterNumber];
+            }
+          });
+        }
+
+        const parentUser: User = {
+          id: `parent${Date.now()}`,
+          username: newRegisterNumber,
+          password: "welcome",
+          role: "Parent",
+          studentId: newRegisterNumber,
+          isFirstLogin: true,
         };
-        setData((prev) => {
-          const parentUser: User = {
-            id: `parent${Date.now()}`,
-            username: newRegisterNumber,
-            password: "welcome",
-            role: "Parent",
-            studentId: newRegisterNumber,
-            isFirstLogin: true,
-          };
-          const updatedUsers = [
-            ...prev.users.map((u) =>
-              u.id === currentUser?.id
-                ? {
-                    ...u,
-                    assignedStudents: u.assignedStudents
-                      ? [...u.assignedStudents, newRegisterNumber]
-                      : [newRegisterNumber],
-                  }
-                : u
-            ),
-            parentUser,
-          ];
-          return {
-            ...prev,
-            students: [...prev.students, newStudent],
-            users: updatedUsers,
-          };
-        });
+
+        return {
+          ...prev,
+          students: [...prev.students, newStudent],
+          users: [...updatedUsers, parentUser],
+        };
+      });
+
+      // Update current user if they are the assigned faculty
+      if (currentUser?.id === facultyId) {
         setCurrentUser((prev) => {
           if (!prev) return prev;
-          const currentAssigned = prev.assignedStudents ? [...prev.assignedStudents, newRegisterNumber] : [newRegisterNumber];
-          return { ...prev, assignedStudents: currentAssigned };
-        });
-        toast({
-          title: "Student Added",
-          description: `New student ${name} added and assigned to you.`,
+          return {
+            ...prev,
+            assignedStudents: [...(prev.assignedStudents || []), newRegisterNumber],
+          };
         });
       }
+
       setStudentForm({
-        registerNumber: "",
         name: "",
         fatherName: "",
         motherName: "",
         fatherPhone: "",
         motherPhone: "",
         address: "",
-        grade: "8th Grade",
+        grade: "10th Grade",
         section: "A",
         totalFee: 20000,
+      });
+
+      toast({
+        title: "Student Added",
+        description: `New student ${name} added and auto-assigned to ${facultyId || "relevant faculty"}.`,
       });
     };
 
@@ -1269,17 +1197,10 @@ const Index = () => {
           <Card className="p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <Plus className="w-5 h-5 text-primary" />
-              Add / Update Student
+              Add Student
             </h2>
+            <p className="text-sm text-muted-foreground mb-4">Register number will be auto-generated.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <Label>Register Number *</Label>
-                <Input
-                  value={studentForm.registerNumber}
-                  onChange={(e) => setStudentForm({ ...studentForm, registerNumber: e.target.value })}
-                  placeholder="e.g., SCHL2025101"
-                />
-              </div>
               <div>
                 <Label>Full Name *</Label>
                 <Input
@@ -1294,7 +1215,7 @@ const Index = () => {
                   value={studentForm.grade}
                   onChange={(e) => setStudentForm({ ...studentForm, grade: e.target.value })}
                 >
-                  {["6th Grade", "7th Grade", "8th Grade", "9th Grade", "10th Grade"].map((g) => (
+                  {["5th Grade", "6th Grade", "7th Grade", "8th Grade", "9th Grade", "10th Grade"].map((g) => (
                     <option key={g} value={g}>
                       {g}
                     </option>
@@ -1358,13 +1279,11 @@ const Index = () => {
               </div>
             </div>
             <Button className="mt-4" onClick={saveStudent}>
-              {data.students.some((s) => s.registerNumber === studentForm.registerNumber)
-                ? "Update Student"
-                : "Add Student"}
+              Add Student
             </Button>
           </Card>
 
-          {/* ✅ My Students Section — MARKS REMOVED FROM ATTENDANCE VIEW */}
+          {/* My Students Section — MARKS REMOVED FROM ATTENDANCE VIEW */}
           <Card className="p-6 shadow-sm">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold flex items-center gap-2">
@@ -1426,7 +1345,6 @@ const Index = () => {
                         </div>
                       </div>
                     </div>
-                    {/* ✅ REMOVED: No marks grid here anymore */}
                   </div>
                 ))}
                 {assignedStudents.length === 0 && (
@@ -1457,29 +1375,6 @@ const Index = () => {
                     <p className="font-semibold">{foundStudent.name}</p>
                     <p className="text-sm text-muted-foreground">{foundStudent.registerNumber} • {foundStudent.grade}</p>
                     <p className="text-sm mt-1">Portal status: {foundStudent.isPortalBlocked ? "Blocked" : "Active"}</p>
-                  </div>
-                  <div>
-                    <Button onClick={() => {
-                      if (!currentUser?.assignedStudents?.includes(foundStudent.registerNumber)) {
-                        setData((prev) => ({
-                          ...prev,
-                          users: prev.users.map((u) =>
-                            u.id === currentUser?.id
-                              ? { ...u, assignedStudents: [...(u.assignedStudents || []), foundStudent.registerNumber] }
-                              : u
-                          ),
-                        }));
-                        setCurrentUser((prev) => {
-                          if (!prev) return prev;
-                          return { ...prev, assignedStudents: [...(prev.assignedStudents || []), foundStudent.registerNumber] };
-                        });
-                        toast({ title: "Assigned", description: `${foundStudent.name} assigned to you.` });
-                      } else {
-                        toast({ title: "Already Assigned", description: "This student is already in your list." });
-                      }
-                    }}>
-                      Assign to me
-                    </Button>
                   </div>
                 </div>
                 <div>
@@ -1513,7 +1408,7 @@ const Index = () => {
               {assignedStudents.map((student) => {
                 const baseSubjects = ["Telugu", "Hindi", "English", "Mathematics", "Science", "Social"];
                 const gradeNum = parseInt(student.grade.replace(/\D/g, ""));
-                const subjects = gradeNum >= 8 && gradeNum <= 10 ? [...baseSubjects, "Biology"] : baseSubjects;
+                const subjects = gradeNum >= 5 && gradeNum <= 10 ? [...baseSubjects, "Biology"] : baseSubjects;
                 return (
                   <Card key={student.registerNumber} className="p-4">
                     <div 
